@@ -1,26 +1,18 @@
-FROM python:3.10.0-slim
+FROM python:3.9-slim
 
-# 1. Install critical system dependencies
-RUN apt-get update && apt-get install -y \
-    libhdf5-dev \
-    python3-dev \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
-
-# 2. Set up working directory
 WORKDIR /app
 
-# 3. Copy requirements file
+# Copy requirements first for better caching
 COPY requirements.txt .
-
-# 4. Install Python dependencies (Flask was missing before!)
-# Replace the existing install line
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Copy the rest of the application
+COPY . .
 
-# 5. Copy application code
-COPY ./app /app
+# Set environment variables
+ENV FLASK_APP=app.ml:app
+ENV FLASK_ENV=production
 
-# 6. Expose port and run the app
 EXPOSE 5000
-CMD ["python", "ml.py"]
+
+CMD ["flask", "run", "--host=0.0.0.0"]

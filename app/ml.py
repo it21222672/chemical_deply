@@ -11,33 +11,34 @@ CORS(app)  # Enable CORS for all routes
 
 # MySQL Database Configuration
 DB_CONFIG = {
-    "host": "localhost",
-    "user": "root",
-    "password": "root",
-    "database": "water_quality"
+    "host": "sql12.freesqldatabase.com",  
+    "user": "sql12780989",               
+    "password": "WmfMiyJMPz",           
+    "database": "sql12780989",         
+    "port": 3306                        
 }
 
 # Load LSTM Model
 try:
-    model = tf.keras.models.load_model("model/lstm_model.h5")
+    model = tf.keras.models.load_model("app/model/lstm_model.keras")
 except Exception as e:
     print(f"Error loading LSTM model: {e}")
 
 # Load GRU Models
 try:
-    model1 = tf.saved_model.load("model/gru_model1")
-    model2 = tf.saved_model.load("model/gru_model2")
+    model1 = tf.saved_model.load("app/model/gru_model1")
+    model2 = tf.saved_model.load("app/model/gru_model2")
 except Exception as e:
     print(f"Error loading GRU models: {e}")
 
 # Load Scalers
 try:
-    scaler_features = pickle.load(open("utils/scaler_features.pkl", "rb"))
-    scaler_targets = pickle.load(open("utils/scaler_targets.pkl", "rb"))
-    scaler_X1 = joblib.load("utils/scaler_X1.pkl")
-    scaler_y1 = joblib.load("utils/scaler_y1.pkl")
-    scaler_X2 = joblib.load("utils/scaler_X2.pkl")
-    scaler_y2 = joblib.load("utils/scaler_y2.pkl")
+    scaler_features = pickle.load(open("app/utils/scaler_features.pkl", "rb"))
+    scaler_targets = pickle.load(open("app/utils/scaler_targets.pkl", "rb"))
+    scaler_X1 = joblib.load("app/utils/scaler_X1.pkl")
+    scaler_y1 = joblib.load("app/utils/scaler_y1.pkl")
+    scaler_X2 = joblib.load("app/utils/scaler_X2.pkl")
+    scaler_y2 = joblib.load("app/utils/scaler_y2.pkl")
 except Exception as e:
     print(f"Error loading scalers: {e}")
 
